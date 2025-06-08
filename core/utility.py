@@ -179,8 +179,8 @@ def get_all_parent_entity(params: dict) -> dict:
                     {
                         "match": {
                             "shareholders": {
-                                "query": str(params['search_query']),
-                                "boost": 5.0
+                                "query": str(params['search_query'])
+                                #,"boost": 5.0
                             }
                         }
                     },
@@ -195,7 +195,7 @@ def get_all_parent_entity(params: dict) -> dict:
                 ]
             }
         }, 
-        "size": 0, "min_score": 15,
+        "size": 0, "min_score": 10,
         "aggs": {
             "distinct_entity_names": {
                 "terms": {

@@ -32,7 +32,7 @@ def process_page(page_num, page_text):
     if not page_text or page_text.strip() == "" or "\n" not in page_text:
         return (page_num, 'no')
 
-    prompt_text = f"Check if the text lists shareholders along with their holding amounts. Return only Yes or No. Strictly do not say anything else.\n\n{page_text}"
+    prompt_text = f"Does the context lists individuals or executives or institutions with their shareholdings or equity amounts? Return only Yes or No. Strictly do not say anything else.\n\n context: {page_text}"
     response = llm.invoke(prompt_text)
     
     if response.content.lower() == 'yes' : print(f"Shareholder Information exists in Page : {page_num}")
@@ -102,6 +102,7 @@ def parse_pdf_load_to_es(web_url, pdf_url, pdf_input):
             }
             documents.append(doc)
     print(f"Documents sent to ES : {len(documents)}")
+    print(f"Page_numbers of Documents sent to ES : {[doc['page_number'] for doc in documents]}")
     bulk_upload_to_elastic(documents, es_client, elastic_index_name)
     
 
@@ -118,8 +119,7 @@ def bulk_upload_to_elastic(documents, es, index_name):
             for doc in documents
         ]
         
-        #es = es.options(request_timeout=180, max_retries=5, retry_on_timeout=True)
-        es = es.options(request_timeout=120)
+        es = es.options(request_timeout=180)
         # Perform bulk upload
         try:
             #success, failed = helpers.bulk(es, actions)

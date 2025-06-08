@@ -2,7 +2,7 @@
   "processors": [
     {
       "script": {
-        "source": "ctx.prompt = 'Extract all tables from the provided text that explicitly list shareholders along with their holding amounts. The holding amount may be in percentage, direct interest, indirect interest, or null. Ensure that all relevant tables—including, but not limited to, INFORMATION ON SUBSTANTIAL SHAREHOLDERS, DIRECTORS SHAREHOLDINGS, and CHIEF EXECUTIVE OFFICER SHAREHOLDINGS—are fully captured with all rows and columns. Ignore sections that do not contain structured shareholder information, such as corporate structures, governance details, or subsidiaries. If no shareholder table exists, return NONE.Here is the text: ' + ctx.body;"
+        "source": "ctx.prompt = 'Extract any structured information about individual or institutional shareholders and their shareholdings, including executives or directors. Include all relevant details and tables. If no such structured shareholding information is found, strictly return NONE.Here is the Context: ' + ctx.body;"
       }
     },
     {
