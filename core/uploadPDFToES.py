@@ -118,11 +118,24 @@ def bulk_upload_to_elastic(documents, es, index_name):
             for doc in documents
         ]
         
+        #es = es.options(request_timeout=180, max_retries=5, retry_on_timeout=True)
         es = es.options(request_timeout=120)
         # Perform bulk upload
         try:
-            success, failed = helpers.bulk(es, actions)
-            print(f"Successfully uploaded {success} documents")
+            #success, failed = helpers.bulk(es, actions)
+            #print(f"Successfully uploaded {success} documents")
+            
+            success_count = 0
+            failure_count = 0
+            for ok, result in helpers.parallel_bulk(es, actions, thread_count=4, chunk_size=2):
+                if ok:
+                    success_count += 1
+                else:
+                    failure_count += 1
+                    print("Failed document:", result)
+            print(f"Successfully uploaded {success_count} documents")
+            if failure_count:
+                raise Exception(f"{failure_count} documents failed to index in ES.")
             
             # Get the company shareholder relation aligned 
             
