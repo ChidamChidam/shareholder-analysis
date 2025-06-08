@@ -1,0 +1,28 @@
+{
+  "processors": [
+    {
+      "script": {
+        "source": "ctx.prompt = 'Extract all tables from the provided text that explicitly list shareholders along with their holding amounts. The holding amount may be in percentage, direct interest, indirect interest, or null. Ensure that all relevant tables—including, but not limited to, INFORMATION ON SUBSTANTIAL SHAREHOLDERS, DIRECTORS SHAREHOLDINGS, and CHIEF EXECUTIVE OFFICER SHAREHOLDINGS—are fully captured with all rows and columns. Ignore sections that do not contain structured shareholder information, such as corporate structures, governance details, or subsidiaries. If no shareholder table exists, return NONE.Here is the text: ' + ctx.body;"
+      }
+    },
+    {
+      "inference": {
+        "model_id": "azure_openai_gpt4omini_completion",
+        "input_output": {
+          "input_field": "prompt",
+          "output_field": "shareholders"
+        }
+      }
+    },
+    {
+      "drop": {
+        "if": "ctx.shareholders == 'NONE'"
+      }
+    },
+    {
+      "remove": {
+        "field": ["prompt", "body"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+python-dotenv==1.0.1
+PyPDF2
+elasticsearch==8.17.0
+requests
+bs4
+langchain
+langchain_openai
+langchain_elasticsearch
+langgraph
+streamlit
+pandas

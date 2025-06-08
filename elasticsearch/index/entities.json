@@ -1,0 +1,8 @@
+{
+  "mappings": {
+    "properties": {
+      "parent_entity": { "type": "keyword" },
+      "child_entity": { "type": "keyword" }
+    }
+  }
+}

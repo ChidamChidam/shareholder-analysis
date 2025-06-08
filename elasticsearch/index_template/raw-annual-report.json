@@ -1,0 +1,37 @@
+{
+  "index_patterns": [ "raw_annual_report_*"],
+  "template": {
+      "mappings": {
+          "properties": {
+              "web_url": {
+                  "type": "keyword"
+              },
+              "pdf_url": {
+                  "type": "keyword"
+              },
+              "document_name": {
+                  "type": "keyword"
+              },
+              "entity_name": {
+                  "type": "keyword"
+              },
+              "total_pages": {
+                  "type": "long"
+              },
+              "page_number": {
+                  "type": "long"
+              },
+              "shareholders": {
+                  "type": "text",
+                  "copy_to": "shareholders_vector"
+              },
+              "shareholders_vector": {
+                  "type": "semantic_text"
+              },
+              "timestamp": {
+                  "type": "date"
+              }
+          }
+      }
+  }
+}
